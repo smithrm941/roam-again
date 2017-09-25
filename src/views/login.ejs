@@ -19,8 +19,15 @@
       </div>
     </div>
     <br>
+    <%if (message) { %>
+      <p class="wrong-info-message">
+        <%=message%>
+      </p>
+    <% } %>
+    <br>
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>
+
 
 <% include partials/footer %>
