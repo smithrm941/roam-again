@@ -1,0 +1,32 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+<br>
+<br>
+
+<form action="/signup" method="POST">
+  <div class="form-group signup-form">
+    <h1>New user? Please sign up! </h1>
+    <div class="form-group-row">
+      <label for="signup-email-input" class="col-2 col-form-label">Email</label>
+      <div class="col-10">
+        <input name="email" class="form-control" type="text" id="signup-email-input" >
+      </div>
+    </div>
+    <div class="form-group-row">
+      <label for="signup-password-input" class="col-2 col-form-label">Password</label>
+      <div class="col-10">
+        <input name="password" class="form-control" type="password" id="signup-password-input">
+      </div>
+    </div>
+    <div class="form-group-row">
+      <label for="confirm-password-input" class="col-2 col-form-label">Confirm Password</label>
+      <div class="col-10">
+        <input name="confirmPassword" class="form-control" type="password" id="confirm-password-input">
+      </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+<% include partials/footer %>
