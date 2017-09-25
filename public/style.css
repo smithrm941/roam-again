@@ -5,3 +5,12 @@
 a{
   color: black;
 }
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.login-form{
+  margin-left: 10px;
+}
