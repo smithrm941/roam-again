@@ -1,3 +1,7 @@
-h1 {
+.navbar {
   background-color: orange;
+}
+
+a{
+  color: black;
 }
