@@ -1,15 +1,31 @@
 <%- include partials/header %>
 <%- include partials/navbar %>
 
+<h1>Hey it's <%= user.name%>!</h1>
+<br>
 <% if (edit) { %>
-  <h1>We're gonna edit here!</h1>
-<% } else { %>
-  <h1>Hey there, <%= user.name%>!</h1>
-  <p>Name: <%= user.name%></p>
-  <p>Current City: <%= user.current_city%></p>
-  <p>Join Date: <%= user.join_date%></p>
+  <h2>Name changed? Moved? Edit your profile here:</h2>
+  <br>
+  <form action="<%=user.id%>" method="POST">
+    <div class="form-group row">
+      <label for="name" class="col-2 col-form-label">Name:</label>
+      <input name="name" class="form-control-sm" type="text" value="<%= user.name%>">
+    </div>
+    <div class="form-group row">
+      <label for="current_city" class="col-2 col-form-label">Current City:</label>
+      <input name="current_city" class="form-control-sm" type="text" value="<%= user.current_city%>">
+    </div>
+    <p>Join Date: <%= user.join_date%></p>
 
-  <button type="button" class="btn"><a href='/user/edit/<%=user.id%>'>Edit Profile</a></button>
+    <button type="submit" class="btn">Save Changes</button>
+  </form>
+<% } else { %>
+    <p>Name: <%= user.name%></p>
+    <p>Current City: <%= user.current_city%></p>
+    <p>Join Date: <%= user.join_date%></p>
+  <form action="/user/edit/<%=user.id%>" method="GET">
+    <button type="submit" class="btn">Edit Profile</button>
+  </form>
 <% } %>
 
 

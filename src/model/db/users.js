@@ -14,7 +14,7 @@ const newUser = (email, password) => {
     })
 }
 
-const logIn = (email, password) => {
+const logInUser = (email, password) => {
   return db.query(`
     SELECT
       *
@@ -56,9 +56,27 @@ const findUserById = (id) => {
     })
 }
 
+const updateProfile = (id, name, current_city) => {
+  return db.query(`
+    UPDATE
+      users
+    SET
+      name = $2,
+      current_city = $3
+    WHERE
+      id = $1
+    RETURNING
+      *;
+  `, [id, name, current_city])
+  .then((user) => {
+    return user[0]
+  })
+}
+
 module.exports = {
   newUser,
-  logIn,
+  logInUser,
   findUserByEmail,
-  findUserById
+  findUserById,
+  updateProfile
 }

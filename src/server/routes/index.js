@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {signUpUser, logInUser, findUserByEmail, findUserById} = require('../../model/users')
+const {signUpUser, logInUser, findUserByEmail, findUserById, updateProfile} = require('../../model/users')
 
 router.get('/', (request, response) => {
   if(!request.session.user){
@@ -24,14 +24,14 @@ router.post('/login', (request, response) => {
       if(user){
         request.session.user = user;
         response.redirect(`/user/${user.id}`)
-      } else {
-        response.render('login', {message: 'Incorrect email or password.'})
+      } else if(user === undefined) {
+        response.render('login', {user: null, message: 'Incorrect email or password.'})
       }
     })
 })
 
 router.get('/signup', (request, response) => {
-  response.render('signup', {message: ''})
+  response.render('signup', {user: null, message: ''})
 })
 
 router.post('/signup', (request, response) => {
@@ -39,9 +39,9 @@ router.post('/signup', (request, response) => {
     return findUserByEmail(email)
     .then((user) => {
       if(user){
-        response.render('signup', {message: 'User already exists.'})
+        response.render('signup', {user: null, message: 'User already exists.'})
       } else if(!user && password != confirmPassword){
-        response.render('signup', {message: 'Passwords do not match.'})
+        response.render('signup', {user: null, message: 'Passwords do not match.'})
       } else {
         return signUpUser(email, password)
         .then((user) => {
@@ -53,11 +53,20 @@ router.post('/signup', (request, response) => {
 })
 
 router.get('/user/:id', (request, response) => {
-  const id = request.params;
-  if(!request.session.user){
+  const id = request.params.id;
+  if(request.session.user === undefined){
     response.redirect('/login')
   } else if (request.session.user) {
-    response.render('user', {user: request.session.user, edit:false})
+    return findUserById(id)
+    .then((user) => {
+      if(request.session.user.id === user.id){
+        console.log('want some kind of private page...')
+        response.render('user', {user, edit:false})
+      } else {
+        console.log('want some kind of public page...')
+        response.render('user', {user, edit:false})
+      }
+    })
   }
 })
 
@@ -68,6 +77,16 @@ router.get('/user/edit/:id', (request, response) => {
   } else if (request.session.user) {
     response.render('user', {user: request.session.user, edit:true})
   }
+})
+
+router.post('/user/edit/:id', (request, response) => {
+  const id = request.params.id;
+  const {name, current_city} = request.body
+  return updateProfile(id, name, current_city)
+  .then((user) => {
+    request.session.user = user;
+    response.redirect(`/user/${id}`)
+  })
 })
 
 router.get('/logout', (request, response) => {
