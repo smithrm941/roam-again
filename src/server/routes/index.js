@@ -60,11 +60,15 @@ router.get('/user/:id', (request, response) => {
     return findUserById(id)
     .then((user) => {
       if(request.session.user.id === user.id){
-        console.log('want some kind of private page...')
-        response.render('user', {user, edit:false})
+        response.render('user', {user,
+          loggedInProfile: request.session.user.id,
+          edit:false,
+          public: false})
       } else {
-        console.log('want some kind of public page...')
-        response.render('user', {user, edit:false})
+        response.render('user', {user,
+          loggedInProfile: request.session.user.id,
+          edit:false,
+          public: true})
       }
     })
   }
@@ -75,7 +79,9 @@ router.get('/user/edit/:id', (request, response) => {
   if(!request.session.user){
     response.redirect('/login')
   } else if (request.session.user) {
-    response.render('user', {user: request.session.user, edit:true})
+    response.render('user', {user: request.session.user,
+      loggedInProfile: request.session.user.id,
+      edit:true, public: false})
   }
 })
 
