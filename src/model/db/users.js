@@ -28,10 +28,10 @@ const logIn = (email, password) => {
     })
 }
 
-const findUser = (email) => {
+const findUserByEmail = (email) => {
   return db.query(`
     SELECT
-      email
+      *
     FROM
       users
     WHERE
@@ -42,8 +42,23 @@ const findUser = (email) => {
     })
 }
 
+const findUserById = (id) => {
+  return db.query(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      id = $1`
+      , [id])
+    .then((user) => {
+      return user[0]
+    })
+}
+
 module.exports = {
   newUser,
   logIn,
-  findUser
+  findUserByEmail,
+  findUserById
 }

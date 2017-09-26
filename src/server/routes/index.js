@@ -1,12 +1,16 @@
 const router = require('express').Router()
-const {signUpUser, logInUser, findUser} = require('../../model/users')
+const {signUpUser, logInUser, findUserByEmail, findUserById} = require('../../model/users')
 
 router.get('/', (request, response) => {
-  response.render('splash')
+  if(!request.session.user){
+    response.render('splash', {user: null})
+  } else if (request.session.user) {
+    response.render('splash', {user: request.session.user})
+  }
 })
 
 router.get('/login', (request, response) => {
-  response.render('login', {message: ''})
+  response.render('login', {user: null, message: ''})
 })
 
 router.post('/login', (request, response) => {
@@ -14,6 +18,7 @@ router.post('/login', (request, response) => {
   return logInUser(email, password)
     .then((user) => {
       if(user){
+        request.session.user = user;
         response.redirect(`/user/${user.id}`)
       } else {
         response.render('login', {message: 'Incorrect email or password.'})
@@ -27,7 +32,7 @@ router.get('/signup', (request, response) => {
 
 router.post('/signup', (request, response) => {
   const {email, password, confirmPassword} = request.body;
-    return findUser(email)
+    return findUserByEmail(email)
     .then((user) => {
       if(user){
         response.render('signup', {message: 'User already exists.'})
@@ -36,6 +41,7 @@ router.post('/signup', (request, response) => {
       } else {
         return signUpUser(email, password)
         .then((user) => {
+          request.session.user = user;
           response.redirect(`/user/${user.id}`)
         })
       }
@@ -44,7 +50,16 @@ router.post('/signup', (request, response) => {
 
 router.get('/user/:id', (request, response) => {
   const id = request.params;
-  response.render('user')
+  if(!request.session.user){
+    response.redirect('/login')
+  } else if (request.session.user) {
+    response.render('user', {user: request.session.user})
+  }
+})
+
+router.get('/logout', (request, response) => {
+  request.session.user = null;
+  response.redirect('/')
 })
 
 module.exports = router
