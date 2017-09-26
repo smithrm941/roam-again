@@ -10,7 +10,11 @@ router.get('/', (request, response) => {
 })
 
 router.get('/login', (request, response) => {
-  response.render('login', {user: null, message: ''})
+  if(!request.session.user){
+    response.render('login', {user: null, message: ''})
+  } else if (request.session.user) {
+    response.redirect('/')
+  }
 })
 
 router.post('/login', (request, response) => {
@@ -53,7 +57,16 @@ router.get('/user/:id', (request, response) => {
   if(!request.session.user){
     response.redirect('/login')
   } else if (request.session.user) {
-    response.render('user', {user: request.session.user})
+    response.render('user', {user: request.session.user, edit:false})
+  }
+})
+
+router.get('/user/edit/:id', (request, response) => {
+  const id = request.params;
+  if(!request.session.user){
+    response.redirect('/login')
+  } else if (request.session.user) {
+    response.render('user', {user: request.session.user, edit:true})
   }
 })
 

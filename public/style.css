@@ -2,7 +2,11 @@
   background-color: orange;
 }
 
-a{
+.general-welcome a{
+  color: grey;
+}
+
+.navbar a{
   color: black;
   margin-left: 12px;
 }
@@ -18,4 +22,14 @@ body {
 
 .wrong-info-message{
   color: red;
+}
+
+.world-map{
+  width: 600px;
+  height: 400px;
+  margin-right: 40px;
+}
+
+.btn{
+  color: grey;
 }

@@ -1,6 +1,18 @@
 <%- include partials/header %>
 <%- include partials/navbar %>
 
-<h1>TEST: User page</h1>
+<% if (edit) { %>
+  <h1>We're gonna edit here!</h1>
+<% } else { %>
+  <h1>Hey there, <%= user.name%>!</h1>
+  <p>Name: <%= user.name%></p>
+  <p>Current City: <%= user.current_city%></p>
+  <p>Join Date: <%= user.join_date%></p>
+
+  <button type="button" class="btn"><a href='/user/edit/<%=user.id%>'>Edit Profile</a></button>
+<% } %>
+
+
+
 
 <% include partials/footer %>
