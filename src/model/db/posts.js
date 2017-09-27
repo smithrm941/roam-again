@@ -1,16 +1,15 @@
 const db = require('./db')
 
-const findPostsByAuthor = (id) => {
+const findPostsByAuthor = (author) => {
   return db.query(`
     SELECT
       *
     FROM
       posts
     WHERE
-      id = $1
-    `, [id])
+      author = $1
+    `, [author])
     .then((posts) => {
-      console.log(posts)
       return posts
     })
 }

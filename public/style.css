@@ -33,3 +33,15 @@ body {
 .btn{
   color: grey;
 }
+
+.profile-label{
+  font-weight: bold;
+}
+
+.profile-info{
+  margin-left: 20px;
+}
+
+.profile-post-list{
+  margin-left: 20px;
+}

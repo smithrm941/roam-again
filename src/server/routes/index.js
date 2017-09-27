@@ -1,18 +1,7 @@
 const router = require('express').Router()
 const {signUpUser, logInUser, findUserByEmail, findUserById, updateProfile} = require('../../model/users')
 const {findPostsByAuthor} = require('../../model/posts')
-const {ensureLoggedIn, helloWorld, cruelWorld} = require('../middleware')
-
-router.get('/', helloWorld)
-router.get('/login', helloWorld)
-router.get('/signup', helloWorld)
-router.get('/user', helloWorld)
-
-router.post('/login', cruelWorld)
-router.post('/signup', cruelWorld)
-router.post('/user/edit/:id', cruelWorld)
-
-
+const {ensureLoggedIn} = require('../middleware')
 
 router.get('/', (request, response) => {
   if(!request.session.user){
@@ -32,7 +21,7 @@ router.get('/login', (request, response) => {
 
 router.post('/login', (request, response) => {
   const {email, password} = request.body;
-  return logInUser(email, password)
+   logInUser(email, password)
     .then((user) => {
       if(user){
         request.session.user = user;
@@ -49,14 +38,14 @@ router.get('/signup', (request, response) => {
 
 router.post('/signup', (request, response) => {
   const {email, password, confirmPassword} = request.body;
-    return findUserByEmail(email)
+    findUserByEmail(email)
     .then((user) => {
       if(user){
         response.render('signup', {user: null, message: 'User already exists.'})
       } else if(!user && password != confirmPassword){
         response.render('signup', {user: null, message: 'Passwords do not match.'})
       } else {
-        return signUpUser(email, password)
+        signUpUser(email, password)
         .then((user) => {
           request.session.user = user;
           response.redirect(`/user/${user.id}`)
@@ -69,21 +58,28 @@ router.use(ensureLoggedIn)
 
 router.get('/user/:id', (request, response) => {
   const id = request.params.id;
-    return findUserById(id)
-    .then((user) => {
-      // findPostsByAuthor(user.id)
-      if(request.session.user.id === user.id){
-        response.render('user', {user,
-          loggedInProfile: request.session.user.id,
-          edit:false,
-          public: false})
-      } else {
-        response.render('user', {user,
-          loggedInProfile: request.session.user.id,
-          edit:false,
-          public: true})
-      }
+  findUserById(id)
+  .then((user) => {
+     findPostsByAuthor(user.id)
+    .then((posts) => {
+        if(request.session.user.id === user.id){
+
+          response.render('user', {user,
+            posts,
+            loggedInProfile: request.session.user.id,
+            edit:false,
+            public: false})
+
+        } else if (request.session.user.id !== user.id){
+
+          response.render('user', {user,
+            posts,
+            loggedInProfile: request.session.user.id,
+            edit:false,
+            public: true})
+        }
     })
+  })
 })
 
 router.get('/user/edit/:id', (request, response) => {
@@ -96,7 +92,7 @@ router.get('/user/edit/:id', (request, response) => {
 router.post('/user/edit/:id', (request, response) => {
   const id = request.params.id;
   const {name, current_city} = request.body
-  return updateProfile(id, name, current_city)
+  updateProfile(id, name, current_city)
   .then((user) => {
     request.session.user = user;
     response.redirect(`/user/${id}`)
