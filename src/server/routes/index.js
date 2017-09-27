@@ -1,5 +1,18 @@
 const router = require('express').Router()
 const {signUpUser, logInUser, findUserByEmail, findUserById, updateProfile} = require('../../model/users')
+const {findPostsByAuthor} = require('../../model/posts')
+const {ensureLoggedIn, helloWorld, cruelWorld} = require('../middleware')
+
+router.get('/', helloWorld)
+router.get('/login', helloWorld)
+router.get('/signup', helloWorld)
+router.get('/user', helloWorld)
+
+router.post('/login', cruelWorld)
+router.post('/signup', cruelWorld)
+router.post('/user/edit/:id', cruelWorld)
+
+
 
 router.get('/', (request, response) => {
   if(!request.session.user){
@@ -52,13 +65,13 @@ router.post('/signup', (request, response) => {
     })
 })
 
+router.use(ensureLoggedIn)
+
 router.get('/user/:id', (request, response) => {
   const id = request.params.id;
-  if(request.session.user === undefined){
-    response.redirect('/login')
-  } else if (request.session.user) {
     return findUserById(id)
     .then((user) => {
+      // findPostsByAuthor(user.id)
       if(request.session.user.id === user.id){
         response.render('user', {user,
           loggedInProfile: request.session.user.id,
@@ -71,18 +84,13 @@ router.get('/user/:id', (request, response) => {
           public: true})
       }
     })
-  }
 })
 
 router.get('/user/edit/:id', (request, response) => {
   const id = request.params;
-  if(!request.session.user){
-    response.redirect('/login')
-  } else if (request.session.user) {
     response.render('user', {user: request.session.user,
       loggedInProfile: request.session.user.id,
       edit:true, public: false})
-  }
 })
 
 router.post('/user/edit/:id', (request, response) => {

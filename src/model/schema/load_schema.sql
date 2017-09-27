@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS posts;
 CREATE TABLE posts(
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
+  author INTEGER REFERENCES users(id),
   content TEXT,
   city INTEGER REFERENCES cities(id)
 );

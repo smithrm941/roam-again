@@ -1,7 +1,12 @@
 <%- include partials/header %>
 <%- include partials/profileNavbar %>
 
-<h1>Hey it's <%= user.name%>!</h1>
+<% if (!user.name) { %>
+  <h1>If this is your page, please update your profile.</h1>
+<% } else { %>
+  <h1>Hey it's <%= user.name%>!</h1>
+<% } %>
+
 <br>
 <% if (public) { %>
   <p>Name: <%= user.name%></p>
