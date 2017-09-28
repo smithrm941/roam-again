@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/smithrm941/roam-again#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
