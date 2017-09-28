@@ -31,7 +31,8 @@ body {
 }
 
 .btn{
-  color: grey;
+  color: white;
+  background-color: grey;
 }
 
 .profile-label{
@@ -42,6 +43,38 @@ body {
   margin-left: 20px;
 }
 
+.profile-label{
+  color: #706e6a;
+}
+
 .profile-post-list{
+  margin-left: 20px;
+}
+
+.individual-post{
+  margin-left: 20px;
+}
+
+.post-title{
+  color: #706e6a;
+}
+
+.post-author{
+  margin-left: 20px;
+}
+
+.post-city{
+  margin-left: 20px;
+}
+
+.post-content{
+  margin-left: 20px;
+}
+
+.not-found{
+  margin-left: 20px;
+}
+
+.not-authorized{
   margin-left: 20px;
 }

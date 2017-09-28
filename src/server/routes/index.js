@@ -1,6 +1,8 @@
 const router = require('express').Router()
 const {signUpUser, logInUser, findUserByEmail, findUserById, updateProfile} = require('../../model/users')
-const {findPostsByAuthor} = require('../../model/posts')
+const {findPostsByAuthor, findPostById, findPostAuthor, findPostCity} = require('../../model/posts')
+const {findCityById} = require('../../model/cities')
+
 const {ensureLoggedIn} = require('../middleware')
 
 router.get('/', (request, response) => {
@@ -79,14 +81,21 @@ router.get('/user/:id', (request, response) => {
             public: true})
         }
     })
+  }).catch((error) => {
+    response.status(404)
+    response.render('notfound')
   })
 })
 
 router.get('/user/edit/:id', (request, response) => {
-  const id = request.params;
+  const id = request.params.id;
+  if(request.session.user.id != id){
+    response.render('unauthorized')
+  } else {
     response.render('user', {user: request.session.user,
       loggedInProfile: request.session.user.id,
       edit:true, public: false})
+  }
 })
 
 router.post('/user/edit/:id', (request, response) => {
@@ -94,8 +103,41 @@ router.post('/user/edit/:id', (request, response) => {
   const {name, current_city} = request.body
   updateProfile(id, name, current_city)
   .then((user) => {
-    request.session.user = user;
     response.redirect(`/user/${id}`)
+  })
+})
+
+router.get('/post/:id', (request, response) => {
+  const id = request.params.id;
+  findPostById(id)
+  .then((post) => {
+    findPostAuthor(post.id)
+    .then((author) => {
+      findPostCity(post.id)
+      .then((city) => {
+        response.render('post', {post, author, city, user: request.session.user})
+      })
+    })
+  }).catch((error) => {
+    response.status(404)
+    response.render('notfound')
+  })
+})
+
+router.get('/city/:id', (request, response) => {
+  const id = request.params.id;
+  findCityById(id)
+  // .then((city) => {
+  //   findPostAuthor(post.id)
+  //   .then((author) => {
+  //     findPostCity(post.id)
+      .then((city) => {
+        response.render('city', {/*post, author,*/ city, user: request.session.user})
+      })
+    // })
+  /*})*/.catch((error) => {
+    response.status(404)
+    response.render('notfound')
   })
 })
 

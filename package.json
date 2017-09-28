@@ -21,9 +21,11 @@
   "homepage": "https://github.com/smithrm941/roam-again#readme",
   "dependencies": {
     "cookie-parser": "^1.4.3",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.15.5",
     "express-session": "^1.15.5",
+    "immutable": "^3.8.1",
     "passport": "^0.4.0",
     "pg-promise": "^6.9.0"
   },

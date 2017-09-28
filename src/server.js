@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const routes = require('./server/routes/index.js')
 const expressSession = require('express-session')
 const cookieParser = require('cookie-parser')
+const config = require('./config/config.js').getConfig();
 
 const app = express()
 
@@ -20,7 +21,7 @@ app.use((request, response, next) => {
 })
 
 app.use(expressSession({
-  secret: 'keyboard cat',
+  secret: config.get("server").get("secret"),
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -30,22 +31,14 @@ app.use(expressSession({
 
 app.use('/', routes)
 
-// Catch incorrect url addresses and return 404 error
-app.use((req, res, next) => {
+app.use((request, response, next) => {
   const err = new Error("Not Found!!")
   err.status = 404
+  response.render('notfound')
   next(err)
 })
 
-//Error handler
-app.use((err, req, res, next) => {
-  res.status(err.status || 500)
-  res.json({
-    error: err.message
-  })
-})
-
-const port = process.env.PORT || 3003
+const port = config.get("server").get("port")
 app.listen(port, () => {
   console.log('Listening on===port:', port)
 })
