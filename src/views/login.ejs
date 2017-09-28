@@ -1,0 +1,33 @@
+<%- include partials/header %>
+<%- include partials/navbar %>
+<br>
+<br>
+
+<form action="/login" method="POST">
+  <div class="form-group login-form">
+    <h1>Returning user? Please log in! </h1>
+    <div class="form-group-row">
+      <label for="login-email-input" class="col-2 col-form-label">Email</label>
+      <div class="col-10">
+        <input name="email" class="form-control" type="text" id="login-email-input" >
+      </div>
+    </div>
+    <div class="form-group-row">
+      <label for="login-password-input" class="col-2 col-form-label">Password</label>
+      <div class="col-10">
+        <input name="password" class="form-control" type="password" id="login-password-input">
+      </div>
+    </div>
+    <br>
+    <%if (message) { %>
+      <p class="wrong-info-message">
+        <%=message%>
+      </p>
+    <% } %>
+    <br>
+    <button type="submit" class="btn">Submit</button>
+  </div>
+</form>
+
+
+<% include partials/footer %>

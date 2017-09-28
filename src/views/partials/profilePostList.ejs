@@ -1,0 +1,8 @@
+<% if (posts.length === 0) { %>
+  <h1>No posts yet!</h1>
+<% } else { %>
+  <h1 class="profile-label">Posts (click on a title to see full post):</h1>
+  <% posts.forEach(function(post){ %>
+    <h3 class="profile-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3>
+  <% }) %>
+<% } %>

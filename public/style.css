@@ -1,3 +1,80 @@
-h1 {
+.navbar {
   background-color: orange;
+}
+
+.general-welcome a{
+  color: grey;
+}
+
+.navbar a{
+  color: black;
+  margin-left: 12px;
+}
+
+body {
+  background-color: black;
+  color: white;
+}
+
+.login-form{
+  margin-left: 10px;
+}
+
+.wrong-info-message{
+  color: red;
+}
+
+.world-map{
+  width: 600px;
+  height: 400px;
+  margin-right: 40px;
+}
+
+.btn{
+  color: white;
+  background-color: grey;
+}
+
+.profile-label{
+  font-weight: bold;
+}
+
+.profile-info{
+  margin-left: 20px;
+}
+
+.profile-label{
+  color: #706e6a;
+}
+
+.profile-post-list{
+  margin-left: 20px;
+}
+
+.individual-post{
+  margin-left: 20px;
+}
+
+.post-title{
+  color: #706e6a;
+}
+
+.post-author{
+  margin-left: 20px;
+}
+
+.post-city{
+  margin-left: 20px;
+}
+
+.post-content{
+  margin-left: 20px;
+}
+
+.not-found{
+  margin-left: 20px;
+}
+
+.not-authorized{
+  margin-left: 20px;
 }

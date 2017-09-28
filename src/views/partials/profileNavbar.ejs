@@ -1,9 +1,9 @@
 <%- include header %>
 <div class="navbar navbar-default" id="myTopnav">
   <h4 class="navbar-left"><a href="/">Home</a></h4>
-  <%if (user) { %>
+  <%if (loggedInProfile) { %>
     <h4 class="navbar-right">
-      <a href="/user/<%=user.id%>">Profile</a>
+      <a href="/user/<%=loggedInProfile%>">Profile</a>
       <a href="/logout">Log Out</a>
     </h4>
   <% } else { %>

@@ -1,0 +1,46 @@
+<%- include partials/header %>
+<%- include partials/profileNavbar %>
+
+<% if (!user.name) { %>
+  <h1>If this is your page, please update your profile.</h1>
+<% } else { %>
+  <h1>Hey it's <%= user.name%>!</h1>
+<% } %>
+
+<br>
+<% if (public) { %>
+  <% include partials/profileInfo %>
+  <br>
+  <br>
+  <% include partials/profilePostList %>
+<% } else { %>
+  <% if (edit) { %>
+    <h2>Name changed? Moved? Edit your profile here:</h2>
+    <br>
+    <form action="<%=user.id%>" method="POST">
+      <div class="form-group row">
+        <label for="name" class="col-2 col-form-label">Name:</label>
+        <input name="name" class="form-control-sm" type="text" value="<%= user.name%>">
+      </div>
+      <div class="form-group row">
+        <label for="current_city" class="col-2 col-form-label">Current City:</label>
+        <input name="current_city" class="form-control-sm" type="text" value="<%= user.current_city%>">
+      </div>
+      <button type="submit" class="btn">Save Changes</button>
+    </form>
+    <% } else { %>
+        <% include partials/profileInfo %>
+        <br>
+        <form action="/user/edit/<%=user.id%>" method="GET">
+          <button type="submit" class="btn">Edit Profile</button>
+        </form>
+        <br>
+        <br>
+        <% include partials/profilePostList %>    
+      <% } %>
+<% } %>
+
+
+
+
+<% include partials/footer %>

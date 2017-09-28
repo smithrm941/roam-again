@@ -10,7 +10,7 @@ CREATE TABLE users(
   password VARCHAR(255) NOT NULL,
   name VARCHAR(255),
   current_city VARCHAR(255),
-  join_date TIMESTAMP DEFAULT current_date
+  join_date DATE DEFAULT current_date
 );
 
 DROP TABLE IF EXISTS cities;
@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS posts;
 CREATE TABLE posts(
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
+  author INTEGER REFERENCES users(id),
   content TEXT,
   city INTEGER REFERENCES cities(id)
 );

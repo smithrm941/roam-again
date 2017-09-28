@@ -1,6 +1,21 @@
 <%- include partials/header %>
 <%- include partials/navbar %>
 
-<h1>TEST</h1>
+<img class="world-map img-fluid rounded float-right" src="http://i.imgur.com/ZTw1q74.jpg" alt="world map"/>
+
+<%if (user) { %>
+  <h1>Welcome back to Roam, <%= user.name%>!</h1>
+
+<% } else { %>
+  <div class='general-welcome'>
+    <h1>Welcome to Roam!</h1>
+    <p>
+      New user? Click <a href="/signup">Here</a> to sign up!
+    </p>
+    <p>
+      Returning user? Click <a href="/login">Here</a> to log in!
+    </p>
+  </div>
+<% } %>
 
 <% include partials/footer %>
