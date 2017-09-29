@@ -4,5 +4,7 @@ module.exports = {
   findPostsByAuthor: postFunctions.findPostsByAuthor,
   findPostById: postFunctions.findPostById,
   findPostAuthor: postFunctions.findPostAuthor,
-  findPostCity: postFunctions.findPostCity
+  findPostCity: postFunctions.findPostCity,
+  findPostsByCity: postFunctions.findPostsByCity,
+  updatePost: postFunctions.updatePost
 }

@@ -60,9 +60,44 @@ const findPostCity = (id) => {
     })
 }
 
+const findPostsByCity = (city) => {
+  return db.query(`
+    SELECT
+      posts.*, cities.name
+    FROM
+      posts, cities
+    WHERE
+      city = cities.id
+    AND
+      city = $1;
+    `, [city])
+    .then((posts) => {
+      return posts
+    })
+}
+
+const updatePost = (id, title, content) => {
+  return db.query(`
+    UPDATE
+      posts
+    SET
+      title = $2,
+      content = $3
+    WHERE
+      id = $1
+    RETURNING
+      *;
+  `, [id, title, content])
+  .then((post) => {
+    return post[0]
+  })
+}
+
 module.exports = {
   findPostsByAuthor,
   findPostById,
   findPostAuthor,
-  findPostCity
+  findPostCity,
+  findPostsByCity,
+  updatePost
 }

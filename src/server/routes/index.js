@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const {signUpUser, logInUser, findUserByEmail, findUserById, updateProfile} = require('../../model/users')
-const {findPostsByAuthor, findPostById, findPostAuthor, findPostCity} = require('../../model/posts')
+const {findPostsByAuthor, findPostById, findPostAuthor, findPostCity, findPostsByCity, updatePost} = require('../../model/posts')
 const {findCityById} = require('../../model/cities')
 
 const {ensureLoggedIn} = require('../middleware')
@@ -94,7 +94,8 @@ router.get('/user/edit/:id', (request, response) => {
   } else {
     response.render('user', {user: request.session.user,
       loggedInProfile: request.session.user.id,
-      edit:true, public: false})
+      edit:true,
+      public: false})
   }
 })
 
@@ -115,7 +116,11 @@ router.get('/post/:id', (request, response) => {
     .then((author) => {
       findPostCity(post.id)
       .then((city) => {
-        response.render('post', {post, author, city, user: request.session.user})
+        response.render('post', {post,
+          author,
+          city,
+          user: request.session.user,
+          edit: false})
       })
     })
   }).catch((error) => {
@@ -124,18 +129,45 @@ router.get('/post/:id', (request, response) => {
   })
 })
 
+router.get('/post/edit/:id', (request, response) => {
+  const id = request.params.id;
+  findPostById(id)
+  .then((post) => {
+    findPostAuthor(post.id)
+    .then((author) => {
+      findPostCity(post.id)
+      .then((city) => {
+        response.render('post', {post,
+          author,
+          city,
+          user: request.session.user,
+          edit: true})
+      })
+    })
+  }).catch((error) => {
+    response.status(404)
+    response.render('notfound')
+  })
+})
+
+router.post('/post/edit/:id', (request, response) => {
+  const id = request.params.id;
+  const {title, content} = request.body
+  updatePost(id, title, content)
+  .then((post) => {
+    response.redirect(`/post/${id}`)
+  })
+})
+
 router.get('/city/:id', (request, response) => {
   const id = request.params.id;
-  findCityById(id)
-  // .then((city) => {
-  //   findPostAuthor(post.id)
-  //   .then((author) => {
-  //     findPostCity(post.id)
+  findCityById(id) //gives id and name of city
       .then((city) => {
-        response.render('city', {/*post, author,*/ city, user: request.session.user})
-      })
-    // })
-  /*})*/.catch((error) => {
+        findPostsByCity(city.id)
+        .then((posts) => { //posts is an array
+          response.render('city', {/*post, author,*/ city, user: request.session.user, posts})
+        })
+      }).catch((error) => {
     response.status(404)
     response.render('notfound')
   })

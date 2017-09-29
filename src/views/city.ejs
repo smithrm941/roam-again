@@ -1,6 +1,15 @@
 <%- include partials/header %>
 <%- include partials/navbar %>
 
-<h3>City stuff goes here...</h3>
+<h3><%=city.name%></h3>
+
+<% if (posts.length === 0) { %>
+  <h1>No posts yet!</h1>
+<% } else { %>
+  <h1>Posts (click on a title to see full post):</h1>
+  <% posts.forEach(function(post){ %>
+    <h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3>
+  <% }) %>
+<% } %>
 
 <% include partials/footer %>
