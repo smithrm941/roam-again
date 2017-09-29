@@ -21,7 +21,7 @@ app.use((request, response, next) => {
 })
 
 app.use(expressSession({
-  secret: process.env.SECRET
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
