@@ -20,13 +20,19 @@ app.use((request, response, next) => {
   next()
 })
 
+// app.use(expressSession({
+//   secret: process.env.SECRET,
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {
+//     expires: 600000
+//     }
+// }))
+
 app.use(cookieSession({
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    expires: 600000
-    }
+  name: 'session',
+  keys: process.env.KEYS,
+  maxAge: 24 * 60 * 60 * 1000
 }))
 
 app.use('/', routes)
