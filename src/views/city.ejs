@@ -1,8 +1,8 @@
 <%- include partials/header %>
-<%- include partials/navbar %>
+<%- include partials/profileNavbar %>
 
 <h3><%=city.name%></h3>
-
+<br>
 <% if (posts.length === 0) { %>
   <h1>No posts yet!</h1>
 <% } else { %>
@@ -11,5 +11,9 @@
     <h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3>
   <% }) %>
 <% } %>
+<br>
+<form action="/city/<%=city.id%>/newpost" method="GET">
+  <button type="submit" class="btn"><a href="/city/newpost"></a>Add New Post</button>
+</form>
 
 <% include partials/footer %>

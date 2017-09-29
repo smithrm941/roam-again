@@ -1,9 +1,9 @@
-const userprofile = require('express').Router()
+const userProfile = require('express').Router()
 const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-userprofile.get('/:id', (request, response) => {
+userProfile.get('/:id', (request, response) => {
   const id = request.params.id;
   users.findUserById(id)
   .then((user) => {
@@ -32,7 +32,7 @@ userprofile.get('/:id', (request, response) => {
   })
 })
 
-userprofile.get('/edit/:id', (request, response) => {
+userProfile.get('/edit/:id', (request, response) => {
   const id = request.params.id;
   if(request.session.user.id != id){
     response.render('unauthorized')
@@ -44,7 +44,7 @@ userprofile.get('/edit/:id', (request, response) => {
   }
 })
 
-userprofile.post('/edit/:id', (request, response) => {
+userProfile.post('/edit/:id', (request, response) => {
   const id = request.params.id;
   const {name, current_city} = request.body
   users.updateProfile(id, name, current_city)
@@ -53,4 +53,4 @@ userprofile.post('/edit/:id', (request, response) => {
   })
 })
 
-module.exports = userprofile
+module.exports = userProfile

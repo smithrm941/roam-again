@@ -1,9 +1,9 @@
-const postProfile = require('express').Router()
+const cityPost = require('express').Router()
 const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-postProfile.get('/post/:id', (request, response) => {
+cityPost.get('/:id', (request, response) => {
   const id = request.params.id;
   posts.findPostById(id)
   .then((post) => {
@@ -24,7 +24,7 @@ postProfile.get('/post/:id', (request, response) => {
   })
 })
 
-postProfile.get('/post/edit/:id', (request, response) => {
+cityPost.get('/edit/:id', (request, response) => {
   const id = request.params.id;
   posts.findPostById(id)
   .then((post) => {
@@ -45,7 +45,7 @@ postProfile.get('/post/edit/:id', (request, response) => {
   })
 })
 
-postProfile.post('/post/edit/:id', (request, response) => {
+cityPost.post('/edit/:id', (request, response) => {
   const id = request.params.id;
   const {title, content} = request.body
   posts.updatePost(id, title, content)
@@ -54,4 +54,4 @@ postProfile.post('/post/edit/:id', (request, response) => {
   })
 })
 
-module.exports = postProfile
+module.exports = cityPost

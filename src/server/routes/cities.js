@@ -1,15 +1,18 @@
-const cityprofile = require('express').Router()
+const cityProfile = require('express').Router()
 const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-cityprofile.get('/city/:id', (request, response) => {
+cityProfile.get('/:id', (request, response) => {
   const id = request.params.id;
-  cities.findCityById(id) //gives id and name of city
+  cities.findCityById(id)
       .then((city) => {
         posts.findPostsByCity(city.id)
-        .then((posts) => { //posts is an array
-          response.render('city', {/*post, author,*/ city, user: request.session.user, posts})
+        .then((posts) => {
+          response.render('city', {city,
+            user: request.session.user,
+            posts,
+            loggedInProfile: request.session.user.id})
         })
       }).catch((error) => {
     response.status(404)
@@ -17,4 +20,9 @@ cityprofile.get('/city/:id', (request, response) => {
   })
 })
 
-module.exports = cityprofile
+cityProfile.get('/:id/newpost', (request, response) => {
+  const id = request.params.id
+  response.render('addpost', {loggedInProfile: request.session.user.id})
+})
+
+module.exports = cityProfile
