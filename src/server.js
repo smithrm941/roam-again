@@ -21,7 +21,7 @@ app.use((request, response, next) => {
 })
 
 app.use(expressSession({
-  secret: config.get("server").get("secret"),
+  secret: process.env.SECRET
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -38,7 +38,7 @@ app.use((request, response, next) => {
   next(err)
 })
 
-const port = config.get("server").get("port")
+const port = process.env.PORT || 3000
 app.listen(port, () => {
   console.log('Listening on===port:', port)
 })
