@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./server/routes/index.js')
-const cookieSession = require('cookie-session')
+const expressSession = require('cookie-session')
 const cookieParser = require('cookie-parser')
 const config = require('./config/config.js').getConfig();
 
@@ -20,19 +20,14 @@ app.use((request, response, next) => {
   next()
 })
 
-// app.use(expressSession({
-//   secret: process.env.SECRET,
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {
-//     expires: 600000
-//     }
-// }))
-
-app.use(cookieSession({
-  name: 'session',
-  keys: process.env.KEYS,
-  maxAge: 24 * 60 * 60 * 1000
+app.use(expressSession({
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secureProxy: true,
+    expires: 600000
+    }
 }))
 
 app.use('/', routes)
