@@ -22,7 +22,22 @@ cityProfile.get('/:id', (request, response) => {
 
 cityProfile.get('/:id/newpost', (request, response) => {
   const id = request.params.id
-  response.render('addpost', {loggedInProfile: request.session.user.id})
+  cities.findCityById(id)
+    .then((city) => {
+      response.render('addpost', {city, loggedInProfile: request.session.user.id})
+    })
+})
+
+cityProfile.post('/:id/newpost', (request, response) => {
+  const id = request.params.id
+  const author = request.session.user.id
+  const {title, content} = request.body
+  const city = id
+  posts.createPost(title, author, content, city)
+  .then((post) => {
+    //some sort of successful post mesage before redirect here....
+    response.redirect(`/city/${id}`)
+  })
 })
 
 module.exports = cityProfile

@@ -93,11 +93,26 @@ const updatePost = (id, title, content) => {
   })
 }
 
+const createPost = (title, author, content, city) => {
+  return db.query(`
+    INSERT INTO
+      posts(title, author, content, city)
+    VALUES
+      ($1, $2, $3, $4)
+    RETURNING
+      *;
+    `, [title, author, content, city])
+    .then((post) => {
+      return post[0]
+    })
+}
+
 module.exports = {
   findPostsByAuthor,
   findPostById,
   findPostAuthor,
   findPostCity,
   findPostsByCity,
-  updatePost
+  updatePost,
+  createPost
 }

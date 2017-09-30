@@ -6,5 +6,6 @@ module.exports = {
   findPostAuthor: postFunctions.findPostAuthor,
   findPostCity: postFunctions.findPostCity,
   findPostsByCity: postFunctions.findPostsByCity,
-  updatePost: postFunctions.updatePost
+  updatePost: postFunctions.updatePost,
+  createPost: postFunctions.createPost
 }

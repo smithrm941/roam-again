@@ -1,19 +1,19 @@
 <%- include partials/header %>
 <%- include partials/profileNavbar %>
 
-<h3><%=city.name%></h3>
+<h1>Welcome to the <%=city.name%> forum!</h1>
 <br>
 <% if (posts.length === 0) { %>
-  <h1>No posts yet!</h1>
+  <h1>No posts yet! Be the first to post about this great city!</h1>
 <% } else { %>
-  <h1>Posts (click on a title to see full post):</h1>
+  <h3>Click on a link to see what people are saying:</h3>
   <% posts.forEach(function(post){ %>
     <h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3>
   <% }) %>
 <% } %>
 <br>
 <form action="/city/<%=city.id%>/newpost" method="GET">
-  <button type="submit" class="btn"><a href="/city/newpost"></a>Add New Post</button>
+  <button type="submit" class="btn"><a href="/city/newpost"></a>Something to add? Click Here!</button>
 </form>
 
 <% include partials/footer %>
