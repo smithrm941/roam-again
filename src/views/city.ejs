@@ -2,6 +2,7 @@
 <%- include partials/profileNavbar %>
 
 <h1>Welcome to the <%=city.name%> forum!</h1>
+<img src="<%=city.img_url%>" alt="<%=city.name%>" style="width:304px;height:228px;">
 <br>
 <% if (posts.length === 0) { %>
   <h1>No posts yet! Be the first to post about this great city!</h1>
