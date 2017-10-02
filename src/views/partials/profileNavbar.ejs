@@ -1,6 +1,7 @@
 <%- include header %>
 <div class="navbar navbar-default" id="myTopnav">
   <h4 class="navbar-left"><a href="/">Home</a></h4>
+  <%- include citylinks %>
   <%if (loggedInProfile) { %>
     <h4 class="navbar-right">
       <a href="/user/<%=loggedInProfile%>">Profile</a>

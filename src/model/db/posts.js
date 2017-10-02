@@ -8,6 +8,9 @@ const findPostsByAuthor = (author) => {
       posts
     WHERE
       author = $1
+    ORDER BY
+      date_posted
+    DESC;
     `, [author])
     .then((posts) => {
       return posts
@@ -69,7 +72,10 @@ const findPostsByCity = (city) => {
     WHERE
       city = cities.id
     AND
-      city = $1;
+      city = $1
+    ORDER BY
+      date_posted
+    DESC;
     `, [city])
     .then((posts) => {
       return posts

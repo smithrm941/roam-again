@@ -1,12 +1,15 @@
 <%- include header %>
 <div class="navbar navbar-default" id="myTopnav">
-  <h4 class="navbar-left"><a href="/">Home</a></h4>
   <%if (user) { %>
+    <h4 class="navbar-left"><a href="/">Home</a></h4>
+    <%- include citylinks %>
     <h4 class="navbar-right">
       <a href="/user/<%=user.id%>">Profile</a>
       <a href="/logout">Log Out</a>
     </h4>
   <% } else { %>
+    <h4 class="navbar-left"><a href="/">Home</a></h4>
+    <%- include citylinks %>
     <h4 class="navbar-right">
       <a href="/signup">Sign Up</a>
       <a href="/login">Log In</a>

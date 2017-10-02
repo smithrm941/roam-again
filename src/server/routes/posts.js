@@ -17,7 +17,6 @@ cityPost.get('/:id', (request, response) => {
             city,
             user: request.session.user,
             edit: false,
-            deletePost: false,
             public: false})
         } else {
           response.render('post', {post,
@@ -25,7 +24,6 @@ cityPost.get('/:id', (request, response) => {
             city,
             user: request.session.user,
             edit: false,
-            deletePost: false,
             public: true})
         }
       })
@@ -48,8 +46,7 @@ cityPost.get('/edit/:id', (request, response) => {
           author,
           city,
           user: request.session.user,
-          edit: true,
-          deletePost: false})
+          edit: true})
       })
     })
   }).catch((error) => {
