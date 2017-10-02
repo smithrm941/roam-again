@@ -11,12 +11,23 @@ cityPost.get('/:id', (request, response) => {
     .then((author) => {
       posts.findPostCity(post.id)
       .then((city) => {
-        response.render('post', {post,
-          author,
-          city,
-          user: request.session.user,
-          edit: false,
-          deletePost: false})
+        if(request.session.user.id === post.author){
+          response.render('post', {post,
+            author,
+            city,
+            user: request.session.user,
+            edit: false,
+            deletePost: false,
+            public: false})
+        } else {
+          response.render('post', {post,
+            author,
+            city,
+            user: request.session.user,
+            edit: false,
+            deletePost: false,
+            public: true})
+        }
       })
     })
   }).catch((error) => {
