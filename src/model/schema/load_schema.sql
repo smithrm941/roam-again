@@ -16,7 +16,8 @@ CREATE TABLE users(
 DROP TABLE IF EXISTS cities;
 CREATE TABLE cities(
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255)
+  name VARCHAR(255),
+  img_url TEXT
 );
 
 DROP TABLE IF EXISTS posts;
@@ -25,5 +26,6 @@ CREATE TABLE posts(
   title VARCHAR(255),
   author INTEGER REFERENCES users(id),
   content TEXT,
-  city INTEGER REFERENCES cities(id)
+  city INTEGER REFERENCES cities(id),
+  date_posted DATE DEFAULT current_date
 );
