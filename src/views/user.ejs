@@ -28,6 +28,10 @@
       </div>
       <button type="submit" class="btn">Save Changes</button>
     </form>
+    <br>
+      <form action="/user/<%=user.id%>" method="GET">
+        <button type="submit" class="btn edit-user-cancel-button">Cancel</button>
+      </form>
     <% } else { %>
         <% include partials/profileInfo %>
         <br>

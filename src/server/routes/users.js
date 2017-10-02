@@ -37,19 +37,25 @@ userProfile.get('/edit/:id', (request, response) => {
   if(request.session.user.id != id){
     response.render('unauthorized')
   } else {
-    response.render('user', {user: request.session.user,
+  return users.findUserById(id)
+  .then((user) => {
+    response.render('user', {user: user,
       loggedInProfile: request.session.user.id,
       edit:true,
       public: false})
+    })
   }
 })
 
 userProfile.post('/edit/:id', (request, response) => {
   const id = request.params.id;
-  const {name, current_city} = request.body
-  users.updateProfile(id, name, current_city)
+  return users.findUserById(id)
   .then((user) => {
-    response.redirect(`/user/${id}`)
+    const {name, current_city} = request.body
+    users.updateProfile(id, name, current_city)
+    .then((user) => {
+      response.redirect(`/user/${id}`)
+    })
   })
 })
 

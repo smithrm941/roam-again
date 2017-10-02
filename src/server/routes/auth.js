@@ -5,7 +5,10 @@ auth.get('/', (request, response) => {
   if(!request.session.user){
     response.render('splash', {user: null})
   } else if (request.session.user) {
-    response.render('splash', {user: request.session.user})
+    users.findUserById(request.session.user.id)
+    .then((user) => {
+      response.render('splash', {user: user})
+    })
   }
 })
 
