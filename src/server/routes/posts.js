@@ -46,7 +46,8 @@ cityPost.get('/edit/:id', (request, response) => {
           author,
           city,
           user: request.session.user,
-          edit: true})
+          edit: true,
+          public: false})
       })
     })
   }).catch((error) => {

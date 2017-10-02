@@ -11,7 +11,7 @@
       <br>
       <h3 class="post-content"><%=post.content%></h3>
   </div>
-<% } else { %>
+<% } else if (!public) { %>
   <% if (edit) { %>
     <form action="<%=post.id%>" method="POST">
       <div class="form-group row">
@@ -44,7 +44,12 @@
           <h2>Are you sure you want to delete "<%=post.title%>"?</h2>
           <span><button type="submit" class="delete-confirmed-button">Yes</button>
         </form>
-        <span><button class="delete-cancel-button">Cancel</button></span>
+        <br>
+        <span>
+          <form action="/post/<%=post.id%>" method="GET">
+            <button class="delete-cancel-button">Cancel</button>
+          </form>
+        </span>
       </div>
     </div>
   <% } %>
