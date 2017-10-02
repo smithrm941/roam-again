@@ -8,7 +8,9 @@
 <% } else { %>
   <h3>Click on a link to see what people are saying:</h3>
   <% posts.forEach(function(post){ %>
-    <h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3>
+    <h6 class="date-posted"><%=post.date_posted%></h6>
+    <span><h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3></span>
+    <br>
   <% }) %>
 <% } %>
 <br>

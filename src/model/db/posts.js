@@ -47,7 +47,7 @@ const findPostAuthor = (id) => {
 const findPostCity = (id) => {
   return db.query(`
     SELECT
-      cities.name
+      cities.id, cities.name
     FROM
       posts, cities
     WHERE
@@ -55,8 +55,8 @@ const findPostCity = (id) => {
     AND
       posts.id = $1;
     `, [id])
-    .then((name) => {
-      return name[0].name
+    .then((city) => {
+      return city[0]
     })
 }
 
@@ -107,6 +107,20 @@ const createPost = (title, author, content, city) => {
     })
 }
 
+const deletePost = (id) => {
+  return db.query(`
+    DELETE FROM
+      posts
+    WHERE
+      id = $1
+    RETURNING
+      *;
+    `, [id])
+    .then((post) => {
+      return post[0]
+    })
+}
+
 module.exports = {
   findPostsByAuthor,
   findPostById,
@@ -114,5 +128,6 @@ module.exports = {
   findPostCity,
   findPostsByCity,
   updatePost,
-  createPost
+  createPost,
+  deletePost
 }

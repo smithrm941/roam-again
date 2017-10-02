@@ -51,6 +51,18 @@ body {
   margin-left: 20px;
 }
 
+.city-post-list{
+  display: inline-block;
+}
+
+.profile-post-list{
+  display: inline-block;
+}
+
+.date-posted{
+  display: inline-block;
+}
+
 .individual-post{
   margin-left: 20px;
 }
@@ -59,16 +71,16 @@ body {
   color: #706e6a;
 }
 
-.post-author{
-  margin-left: 20px;
-}
-
-.post-city{
+.post-info{
   margin-left: 20px;
 }
 
 .post-content{
   margin-left: 20px;
+}
+
+.date-posted{
+  color: #706e6a;
 }
 
 .not-found{
@@ -77,4 +89,24 @@ body {
 
 .not-authorized{
   margin-left: 20px;
+}
+
+.modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content{
+  color: black;
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
 }

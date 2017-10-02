@@ -15,7 +15,8 @@ cityPost.get('/:id', (request, response) => {
           author,
           city,
           user: request.session.user,
-          edit: false})
+          edit: false,
+          deletePost: false})
       })
     })
   }).catch((error) => {
@@ -36,7 +37,8 @@ cityPost.get('/edit/:id', (request, response) => {
           author,
           city,
           user: request.session.user,
-          edit: true})
+          edit: true,
+          deletePost: false})
       })
     })
   }).catch((error) => {
@@ -51,6 +53,20 @@ cityPost.post('/edit/:id', (request, response) => {
   posts.updatePost(id, title, content)
   .then((post) => {
     response.redirect(`/post/${id}`)
+  })
+})
+
+cityPost.post('/delete/:id', (request, response) => {
+  const id = request.params.id;
+  posts.findPostCity(id)
+    .then((city) => {
+      posts.deletePost(id)
+      .then(() => {
+        setTimeout(() => {response.redirect(`/city/${city.id}`)}, 3000)
+      })
+    }).catch((error) => {
+    response.status(404)
+    response.render('notfound')
   })
 })
 

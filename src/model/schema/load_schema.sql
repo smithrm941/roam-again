@@ -25,5 +25,6 @@ CREATE TABLE posts(
   title VARCHAR(255),
   author INTEGER REFERENCES users(id),
   content TEXT,
-  city INTEGER REFERENCES cities(id)
+  city INTEGER REFERENCES cities(id),
+  date_posted DATE DEFAULT current_date
 );

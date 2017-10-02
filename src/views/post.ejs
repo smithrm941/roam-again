@@ -17,13 +17,25 @@
 <% } else { %>
   <div class="individual-post">
     <h1 class="post-title"><%= post.title%></h1>
-      <h6 class="post-author">Author: <a href="/user/<%= post.author%>"><%=author%></a></h6>
-      <h6 class="post-city">Forum: <a href="/city/<%= post.city%>"><%=city%></a></h6>
+      <h6 class="post-info">Author: <a href="/user/<%= post.author%>"><%=author%></a></h6>
+      <h6 class="post-info">Forum: <a href="/city/<%= post.city%>"><%=city.name%></a></h6>
+      <h6 class="post-info">Date: <%=post.date_posted%></h6>
       <br>
       <h3 class="post-content"><%=post.content%></h3>
       <form action="/post/edit/<%=post.id%>" method="GET">
-        <button type="submit" class="btn">Edit Post</button>
+        <button type="submit" class="btn edit-post-button">Edit Post</button>
       </form>
+      <br>
+  </div>
+  <button type="button" id="delete-post-button">Delete Post</button>
+  <div class="modal" id="delete-confirmation">
+    <div class="modal-content">
+      <form action="/post/delete/<%=post.id%>" method="POST">
+        <h2>Are you sure you want to delete "<%=post.title%>"?</h2>
+        <span><button type="submit" class="delete-confirmed-button">Yes</button>
+      </form>
+      <span><button class="delete-cancel-button">Cancel</button></span>
+    </div>
   </div>
 <% } %>
 
