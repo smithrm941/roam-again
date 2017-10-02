@@ -38,18 +38,22 @@ cityPost.get('/edit/:id', (request, response) => {
   const id = request.params.id;
   posts.findPostById(id)
   .then((post) => {
-    posts.findPostAuthor(post.id)
-    .then((author) => {
-      posts.findPostCity(post.id)
-      .then((city) => {
-        response.render('post', {post,
-          author,
-          city,
-          user: request.session.user,
-          edit: true,
-          public: false})
-      })
-    })
+    if(request.session.user.id != post.author){
+      response.render('unauthorized')
+    } else {
+      posts.findPostAuthor(post.id)
+      .then((author) => {
+        posts.findPostCity(post.id)
+        .then((city) => {
+          response.render('post', {post,
+            author,
+            city,
+            user: request.session.user,
+            edit: true,
+            public: false})
+          })
+        })
+    }  
   }).catch((error) => {
     response.status(404)
     response.render('notfound')
