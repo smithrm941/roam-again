@@ -23,6 +23,11 @@
         <input name="content" class="form-control-sm" type="text" value="<%= post.content%>">
       </div>
       <button type="submit" class="btn">Save Changes</button>
+      <span>
+        <form action="/post/<%=post.id%>" method="GET">
+          <button type="submit" class="btn edit-post-button">Cancel</button>
+        </form>
+      </span>
     </form>
   <% } else { %>
     <div class="individual-post">
