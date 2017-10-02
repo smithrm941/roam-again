@@ -6,6 +6,14 @@
   color: grey;
 }
 
+.general-welcome h1{
+  color: pink;
+}
+
+.site-description {
+  color: green;
+}
+
 .navbar a{
   color: black;
   margin-left: 12px;
@@ -20,7 +28,7 @@ body {
   margin-left: 10px;
 }
 
-.wrong-info-message{
+.message{
   color: red;
 }
 

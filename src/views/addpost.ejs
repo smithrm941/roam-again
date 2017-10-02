@@ -16,8 +16,13 @@
         <input name="content" class="form-control" type="text">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" id="new-post-button">Submit</button>
   </div>
 </form>
+<%if (message) { %>
+  <p class="message new-post-message">
+    <%=message%>
+  </p>
+<% } %>
 
 <% include partials/footer %>

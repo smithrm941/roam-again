@@ -24,7 +24,7 @@ cityProfile.get('/:id/newpost', (request, response) => {
   const id = request.params.id
   cities.findCityById(id)
     .then((city) => {
-      response.render('addpost', {city, loggedInProfile: request.session.user.id})
+      response.render('addpost', {city, loggedInProfile: request.session.user.id, message: ''})
     })
 })
 
@@ -32,11 +32,19 @@ cityProfile.post('/:id/newpost', (request, response) => {
   const id = request.params.id
   const author = request.session.user.id
   const {title, content} = request.body
-  const city = id
-  posts.createPost(title, author, content, city)
-  .then((post) => {
-    //some sort of successful post mesage before redirect here....
-    response.redirect(`/city/${id}`)
+  const location = id
+  cities.findCityById(id)
+    .then((city) => {
+      if((title.length > 200 || title.length < 1) || (title.length > 200 || title.length < 1) && content.length < 10){
+        response.render('addpost', {city, loggedInProfile: request.session.user.id, message: 'Title must be between 1 and 200 characters'})
+      } else if (content.length < 10 || (title.length > 200 || title.length < 1) && content.length < 10){
+        response.render('addpost', {city, loggedInProfile: request.session.user.id, message: 'Post must be at least 10 characters long.'})
+      } else {
+        posts.createPost(title, author, content, location)
+        .then((post) => {
+          setTimeout(() => {response.redirect(`/post/${post.id}`)}, 3000)
+        })
+      }
   })
 })
 

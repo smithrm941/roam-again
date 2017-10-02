@@ -6,4 +6,8 @@ const ensureLoggedIn = (request, response, next) => {
   }
 }
 
+const currentCities = (request, response, next) => {
+  
+}
+
 module.exports = {ensureLoggedIn}
