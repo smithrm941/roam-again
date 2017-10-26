@@ -24,5 +24,6 @@ module.exports = {
   logInUser: logInUser,
   findUserByEmail: userFunctions.findUserByEmail,
   findUserById: findUserById,
-  updateProfile: userFunctions.updateProfile
+  updateProfile: userFunctions.updateProfile,
+  findUserByName: userFunctions.findUserByName
 };

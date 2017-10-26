@@ -2,7 +2,6 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const routes = require('./server/routes')
 const expressSession = require('express-session')
-const cookieParser = require('cookie-parser')
 const config = require('./config/config.js').getConfig();
 
 const app = express()
@@ -21,7 +20,6 @@ app.use((request, response, next) => {
 })
 
 app.use(expressSession({
-  secret: process.env.SECRET,
   secret: (config.get("server").get("secret")) || process.ENV.SECRET,
   resave: false,
   saveUninitialized: true,
@@ -37,7 +35,6 @@ app.use((request, response, next) => {
   const err = new Error("Not Found!!")
   err.status = 404
   response.render('notfound')
-  next(err)
 })
 
 const port = process.env.PORT || 3000

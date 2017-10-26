@@ -1,5 +1,5 @@
 <%- include partials/header %>
-<%- include partials/profileNavbar %>
+<%- include partials/navbar %>
 
 <h1>Welcome to the <%=city.name%> forum!</h1>
 <img src="<%=city.img_url%>" alt="<%=city.name%>" style="width:304px;height:228px;">
@@ -11,12 +11,13 @@
   <% posts.forEach(function(post){ %>
     <h6 class="date-posted"><%=post.date_posted%></h6>
     <span><h3 class="city-post-list"><a href="/post/<%=post.id%>"><%=post.title%></a></h3></span>
+    <h3 class="post-content"><%=post.content%></h3>
     <br>
   <% }) %>
 <% } %>
 <br>
 <form action="/city/<%=city.id%>/newpost" method="GET">
-  <button type="submit" class="btn"><a href="/city/newpost"></a>Something to add? Click Here!</button>
+  <button type="submit" class="btn">Something to add? Click Here!</button>
 </form>
 
 <% include partials/footer %>

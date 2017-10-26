@@ -3,32 +3,29 @@ const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-cityProfile.get('/:id', (request, response) => {
+cityProfile.get('/:id', (request, response, next) => {
   const id = request.params.id;
   cities.findCityById(id)
-      .then((city) => {
-        posts.findPostsByCity(city.id)
-        .then((posts) => {
-          response.render('city', {city,
-            user: request.session.user,
-            posts,
-            loggedInProfile: request.session.user.id})
-        })
-      }).catch((error) => {
-    response.status(404)
-    response.render('notfound')
-  })
+    .then((city) => {
+      posts.findPostsByCity(city.id)
+      .then((posts) => {
+        response.render('city', {city,
+          user: request.session.user,
+          posts,
+          loggedInProfile: request.session.user.id})
+      })
+    }).catch(()=> next())
 })
 
-cityProfile.get('/:id/newpost', (request, response) => {
+cityProfile.get('/:id/newpost', (request, response, next) => {
   const id = request.params.id
   cities.findCityById(id)
     .then((city) => {
       response.render('addpost', {city, loggedInProfile: request.session.user.id, message: ''})
-    })
+    }).catch(()=> next())
 })
 
-cityProfile.post('/:id/newpost', (request, response) => {
+cityProfile.post('/:id/newpost', (request, response, next) => {
   const id = request.params.id
   const author = request.session.user.id
   const {title, content} = request.body
@@ -45,7 +42,7 @@ cityProfile.post('/:id/newpost', (request, response) => {
           setTimeout(() => {response.redirect(`/post/${post.id}`)}, 3000)
         })
       }
-  })
+  }).catch(()=> next())
 })
 
 module.exports = cityProfile

@@ -3,9 +3,9 @@ const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-userProfile.get('/:id', (request, response) => {
-  const id = request.params.id;
-  users.findUserById(id)
+userProfile.get('/:id', (request, response, next) => {
+  const name = request.params.id;
+  users.findUserByName(name)
   .then((user) => {
      posts.findPostsByAuthor(user.id)
     .then((posts) => {
@@ -26,13 +26,10 @@ userProfile.get('/:id', (request, response) => {
             public: true})
         }
     })
-  }).catch((error) => {
-    response.status(404)
-    response.render('notfound')
-  })
+  }).catch(()=> next())
 })
 
-userProfile.get('/edit/:id', (request, response) => {
+userProfile.get('/edit/:id', (request, response, next) => {
   const id = request.params.id;
   if(request.session.user.id != id){
     response.render('unauthorized')
@@ -43,20 +40,23 @@ userProfile.get('/edit/:id', (request, response) => {
       loggedInProfile: request.session.user.id,
       edit:true,
       public: false})
-    })
+    }).catch(()=> next())
   }
 })
 
-userProfile.post('/edit/:id', (request, response) => {
+userProfile.post('/edit/:id', (request, response, next) => {
   const id = request.params.id;
   return users.findUserById(id)
   .then((user) => {
-    const {name, current_city} = request.body
-    users.updateProfile(id, name, current_city)
+    const {name, current_city, content} = request.body
+    console.log('What is req.body.content????', request.body.content)
+    users.updateProfile(id, name, current_city, content)
     .then((user) => {
-      response.redirect(`/user/${id}`)
+      request.session.user = user
+      //session gets updated with new user name
+      response.redirect(`/user/${user.name}`)
     })
-  })
+  }).catch(()=> next())
 })
 
 module.exports = userProfile

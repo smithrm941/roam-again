@@ -26,7 +26,8 @@ auth.post('/login', (request, response) => {
     .then((user) => {
       if(user){
         request.session.user = user;
-        response.redirect('/')
+        //*****redirect to page you wanted/needed to login to see:
+        response.redirect('back')
       } else if(user === undefined) {
         response.render('login', {user: null, message: 'Incorrect email or password.'})
       }

@@ -42,6 +42,20 @@ const findUserByEmail = (email) => {
     })
 }
 
+const findUserByName = (name) => {
+  return db.query(`
+    SELECT
+      *
+    FROM
+      users
+    WHERE
+      name = $1`
+      , [name])
+    .then((user) => {
+      return user[0]
+    })
+}
+
 const findUserById = (id) => {
   return db.query(`
     SELECT
@@ -56,18 +70,19 @@ const findUserById = (id) => {
     })
 }
 
-const updateProfile = (id, name, current_city) => {
+const updateProfile = (id, name, current_city, img_url) => {
   return db.query(`
     UPDATE
       users
     SET
       name = $2,
-      current_city = $3
+      current_city = $3,
+      img_url = $4
     WHERE
       id = $1
     RETURNING
       *;
-  `, [id, name, current_city])
+  `, [id, name, current_city, img_url])
   .then((user) => {
     return user[0]
   })
@@ -78,5 +93,6 @@ module.exports = {
   logInUser,
   findUserByEmail,
   findUserById,
-  updateProfile
+  updateProfile,
+  findUserByName
 }

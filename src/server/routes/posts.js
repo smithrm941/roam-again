@@ -3,7 +3,7 @@ const users = require('../../model/users')
 const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
-cityPost.get('/:id', (request, response) => {
+cityPost.get('/:id', (request, response, next) => {
   const id = request.params.id;
   posts.findPostById(id)
   .then((post) => {
@@ -17,24 +17,23 @@ cityPost.get('/:id', (request, response) => {
             city,
             user: request.session.user,
             edit: false,
-            public: false})
+            public: false,
+          date_posted: post.date_posted})
         } else {
           response.render('post', {post,
             author,
             city,
             user: request.session.user,
             edit: false,
-            public: true})
+            public: true,
+          date_posted: post.date_posted})
         }
       })
     })
-  }).catch((error) => {
-    response.status(404)
-    response.render('notfound')
-  })
+  }).catch(()=> next())
 })
 
-cityPost.get('/edit/:id', (request, response) => {
+cityPost.get('/edit/:id', (request, response, next) => {
   const id = request.params.id;
   posts.findPostById(id)
   .then((post) => {
@@ -53,34 +52,28 @@ cityPost.get('/edit/:id', (request, response) => {
             public: false})
           })
         })
-    }  
-  }).catch((error) => {
-    response.status(404)
-    response.render('notfound')
-  })
+    }
+  }).catch(()=> next())
 })
 
-cityPost.post('/edit/:id', (request, response) => {
+cityPost.post('/edit/:id', (request, response, next) => {
   const id = request.params.id;
   const {title, content} = request.body
   posts.updatePost(id, title, content)
   .then((post) => {
     response.redirect(`/post/${id}`)
-  })
+  }).catch(()=> next())
 })
 
-cityPost.post('/delete/:id', (request, response) => {
+cityPost.post('/delete/:id', (request, response, next) => {
   const id = request.params.id;
   posts.findPostCity(id)
     .then((city) => {
       posts.deletePost(id)
-      .then(() => {
-        setTimeout(() => {response.redirect(`/city/${city.id}`)}, 3000)
-      })
-    }).catch((error) => {
-    response.status(404)
-    response.render('notfound')
-  })
+        .then(() => {
+          setTimeout(() => {response.redirect(`/city/${city.id}`)}, 3000)
+        })
+    }).catch(()=> next())
 })
 
 module.exports = cityPost

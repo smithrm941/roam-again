@@ -1,5 +1,5 @@
 <%- include partials/header %>
-<%- include partials/profileNavbar %>
+<%- include partials/navbar %>
 
 <% if (!user.name) { %>
   <h1>If this is your page, please update your profile.</h1>
@@ -26,6 +26,9 @@
         <label for="current_city" class="col-2 col-form-label">Current City:</label>
         <input name="current_city" class="form-control-sm" type="text" value="<%= user.current_city%>">
       </div>
+      <input type="hidden" role="uploadcare-uploader" name="content"
+       data-crop="disabled"
+       data-images-only="true" />
       <button type="submit" class="btn">Save Changes</button>
     </form>
     <br>
