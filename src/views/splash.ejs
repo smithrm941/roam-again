@@ -1,7 +1,6 @@
 <%- include partials/header %>
 <%- include partials/navbar %>
 
-<img class="world-map img-fluid rounded float-right" src="http://i.imgur.com/ZTw1q74.jpg" alt="world map"/>
 
 <%if (user) { %>
   <h1>Welcome back to Roam, <%= user.name%>!</h1>
@@ -19,5 +18,7 @@
   <span><h6 class="site-description">Registered users can enjoy discussing the great cities with fellow travelers around the world.</h6></span>
 
 <% } %>
+<img class="world-map img-fluid rounded" src="http://i.imgur.com/ZTw1q74.jpg" alt="world map"/>
+
 
 <% include partials/footer %>
