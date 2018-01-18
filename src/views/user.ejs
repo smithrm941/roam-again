@@ -1,5 +1,5 @@
 <%- include partials/header %>
-<%- include partials/navbar %>
+<%- include partials/profileNavbar %>
 
 <% if (!user.name) { %>
   <h1>If this is your page, please update your profile.</h1>
@@ -17,7 +17,7 @@
   <% if (edit) { %>
     <h2>Name changed? Moved? Edit your profile here:</h2>
     <br>
-    <form action="<%=user.id%>" method="POST">
+    <form action="/user/edit/<%=user.id%>" method="POST">
       <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Name:</label>
         <input name="name" class="form-control-sm" type="text" value="<%= user.name%>">
@@ -26,13 +26,18 @@
         <label for="current_city" class="col-2 col-form-label">Current City:</label>
         <input name="current_city" class="form-control-sm" type="text" value="<%= user.current_city%>">
       </div>
-      <input type="hidden" role="uploadcare-uploader" name="content"
+      <div class="form-group-row">
+        <label for="current_photo" class="col-2 col-form-label">Current Photo:</label>
+        <input type="hidden" name="current_photo" class="form-control-sm" type="text" value="<%= user.img_url%>">
+        <img src="<%=user.img_url%>" alt="<%=user.name%>" style="width:304px;height:228px;">
+      </div>
+      <input type="hidden" role="uploadcare-uploader" name="new_photo"
        data-crop="disabled"
        data-images-only="true" />
       <button type="submit" class="btn">Save Changes</button>
     </form>
     <br>
-      <form action="/user/<%=user.id%>" method="GET">
+      <form action="/user/<%=user.name%>" method="GET">
         <button type="submit" class="btn edit-user-cancel-button">Cancel</button>
       </form>
     <% } else { %>
