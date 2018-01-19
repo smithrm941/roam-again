@@ -17,7 +17,7 @@ const newUser = (email, password) => {
 const logInUser = (email, password) => {
   return db.query(`
     SELECT
-      *
+      id, email, name, current_city, join_date, img_url
     FROM
       users
     WHERE
@@ -31,7 +31,7 @@ const logInUser = (email, password) => {
 const findUserByEmail = (email) => {
   return db.query(`
     SELECT
-      *
+      id, email, name, current_city, join_date, img_url
     FROM
       users
     WHERE
@@ -45,7 +45,7 @@ const findUserByEmail = (email) => {
 const findUserByName = (name) => {
   return db.query(`
     SELECT
-      *
+      id, email, name, current_city, join_date, img_url
     FROM
       users
     WHERE
@@ -59,7 +59,7 @@ const findUserByName = (name) => {
 const findUserById = (id) => {
   return db.query(`
     SELECT
-      *
+      id, email, name, current_city, join_date, img_url
     FROM
       users
     WHERE
@@ -81,7 +81,7 @@ const updateProfile = (id, name, current_city, img_url) => {
     WHERE
       id = $1
     RETURNING
-      *;
+      id, name, current_city, img_url;
   `, [id, name, current_city, img_url])
   .then((user) => {
     return user[0]
