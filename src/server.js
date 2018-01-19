@@ -34,7 +34,9 @@ app.use('/', routes)
 app.use((request, response, next) => {
   const err = new Error("Not Found!!")
   err.status = 404
-  response.render('notfound')
+  response.render('notfound', {
+    user: request.session.user
+  })
 })
 
 const port = process.env.PORT || 3000

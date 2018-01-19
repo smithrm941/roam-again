@@ -32,7 +32,9 @@ userProfile.get('/:id', (request, response, next) => {
 userProfile.get('/edit/:id', (request, response, next) => {
   const id = request.params.id;
   if(request.session.user.id != id){
-    response.render('unauthorized')
+    response.render('unauthorized', {
+      user: request.session.user
+    })
   } else {
   return users.findUserById(id)
   .then((user) => {

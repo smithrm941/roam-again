@@ -40,7 +40,9 @@ cityPost.get('/edit/:id', (request, response, next) => {
   posts.findPostById(id)
   .then((post) => {
     if(request.session.user.id != post.author){
-      response.render('unauthorized')
+      response.render('unauthorized', {
+        user: request.session.user
+      })
     } else {
       posts.findPostAuthor(post.id)
       .then((author) => {
