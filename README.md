@@ -15,3 +15,5 @@ Roam is one of my first full-stack web apps created from scratch from a set of s
 - Authentication and authorization
 
 Live: https://letsroam.herokuapp.com
+
+<img src='./Roam Demo GIF.gif'/>
