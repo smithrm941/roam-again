@@ -12,7 +12,7 @@ userProfile.get('/:id', (request, response, next) => {
         if(request.session.user.id === user.id){
           response.render('user', {user,
             posts,
-            loggedInProfile: request.session.user.name,
+            loggedInProfile: request.session.user.id,
             edit:false,
             public: false}
           )
@@ -20,7 +20,7 @@ userProfile.get('/:id', (request, response, next) => {
         } else if (request.session.user.id !== user.id){
           response.render('user', {user,
             posts,
-            loggedInProfile: request.session.user.name,
+            loggedInProfile: request.session.user.id,
             edit:false,
             public: true}
           )
@@ -37,7 +37,7 @@ userProfile.get('/edit/:id', (request, response, next) => {
   return users.findUserById(id)
   .then((user) => {
     response.render('user', {user: user,
-      loggedInProfile: request.session.user.name,
+      loggedInProfile: request.session.user.id,
       edit:true,
       public: false})
     }).catch(()=> next())
