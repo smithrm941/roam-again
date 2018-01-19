@@ -19,11 +19,20 @@ return userFunctions.findUserById(id)
     return user;
   })
 }
+
+const findUserByName = (name) => {
+return userFunctions.findUserByName(name)
+  .then((user) => {
+    user.join_date = user.join_date.toDateString();
+    return user;
+  })
+}
+
 module.exports = {
   signUpUser: userFunctions.newUser,
   logInUser: logInUser,
   findUserByEmail: userFunctions.findUserByEmail,
   findUserById: findUserById,
   updateProfile: userFunctions.updateProfile,
-  findUserByName: userFunctions.findUserByName
+  findUserByName: findUserByName
 };

@@ -7,9 +7,9 @@
     <h1 class="post-title"><%= post.title%></h1>
       <h6 class="post-info">Author: <a href="/user/<%= author%>"><%=author%></a></h6>
       <h6 class="post-info">Forum: <a href="/city/<%= post.city%>"><%=city.name%></a></h6>
-      <h6 class="post-info">Date: <%=post.date_posted%></h6>
+      <h6 class="post-info">Date: <%= post.date_posted%></h6>
       <br>
-      <h3 class="post-content"><%=post.content.substring(0, 2)%></h3>
+      <h3 class="post-content"><%= post.content%></h3>
   </div>
 <% } else if (!public) { %>
   <% if (edit) { %>
@@ -37,7 +37,7 @@
         <h6 class="post-info">Forum: <a href="/city/<%= post.city%>"><%=city.name%></a></h6>
         <h6 class="post-info">Date: <%=post.date_posted%></h6>
         <br>
-        <h3 class="post-content"><%=post.content.substring(0, 200)%></h3>
+        <h3 class="post-content"><%= post.content%></h3>
         <form action="/post/edit/<%=post.id%>" method="GET">
           <button type="submit" class="btn edit-post-button">Edit Post</button>
         </form>

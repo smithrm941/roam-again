@@ -2,7 +2,7 @@
 <%- include partials/profileNavbar %>
 
 <% if (!user.name) { %>
-  <h1>If this is your page, please update your profile.</h1>
+  <h1>If this is your page, please add your name to your profile.</h1>
 <% } else { %>
   <h1>Hey it's <%= user.name%>!</h1>
 <% } %>
@@ -37,7 +37,7 @@
       <button type="submit" class="btn">Save Changes</button>
     </form>
     <br>
-      <form action="/user/<%=user.name%>" method="GET">
+      <form action="/user/<%=user.id%>" method="GET">
         <button type="submit" class="btn edit-user-cancel-button">Cancel</button>
       </form>
     <% } else { %>

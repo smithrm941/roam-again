@@ -4,8 +4,8 @@ const posts = require('../../model/posts')
 const cities = require('../../model/cities')
 
 userProfile.get('/:id', (request, response, next) => {
-  const name = request.params.id;
-  users.findUserByName(name)
+  const id = request.params.id;
+  users.findUserById(id)
   .then((user) => {
      posts.findPostsByAuthor(user.id)
     .then((posts) => {
@@ -53,14 +53,14 @@ userProfile.post('/edit/:id', (request, response, next) => {
       users.updateProfile(id, name, current_city, current_photo)
       .then((user) => {
         request.session.user = user
-        response.redirect(`/user/${user.name}`)
+        response.redirect(`/user/${user.id}`)
       })
     } else if (new_photo) {
       const {name, current_city, new_photo} = request.body
       users.updateProfile(id, name, current_city, new_photo)
       .then((user) => {
         request.session.user = user
-        response.redirect(`/user/${user.name}`)
+        response.redirect(`/user/${user.id}`)
       })
     }
   }).catch(()=> next())

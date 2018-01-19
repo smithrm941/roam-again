@@ -50,7 +50,7 @@ auth.post('/signup', (request, response) => {
         users.signUpUser(email, password)
         .then((user) => {
           request.session.user = user;
-          response.redirect(`/user/${user.id}`)
+          response.redirect(`/user/edit/${user.id}`)
         })
       }
     })
