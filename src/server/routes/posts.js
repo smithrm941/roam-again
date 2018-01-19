@@ -13,6 +13,7 @@ cityPost.get('/:id', (request, response, next) => {
       .then((city) => {
         if(request.session.user.id === post.author){
           response.render('post', {post,
+            authorId: post.author,
             author,
             city,
             user: request.session.user,
@@ -21,6 +22,7 @@ cityPost.get('/:id', (request, response, next) => {
           date_posted: post.date_posted})
         } else {
           response.render('post', {post,
+            authorId: post.author,
             author,
             city,
             user: request.session.user,
